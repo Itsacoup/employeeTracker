@@ -15,7 +15,7 @@ install:
 
 
 use:
-Navigate the inquire menu to manipulate as you wish, which the video for full tutorial...
+Navigate the inquire menu to manipulate as you wish, watch the video in ASSETS for full tutorial...
 
 notes from editor:
 Please know that I modeled my initial inquire list of the gif that was included with the assignment. Once i finished the assignment I reviewed instructions.md and noticed that there were some criterea that was asked for ( such as create new department ) that i failed to included. All though that bit of functionality is not present, all the CRUD operations are utilized and I believe my submitted work (all 500 lines) express a comprehensive understanding of how to work with mySQL operations and inquirer. Please consider this when grading. Also some improvements I would make in the future would be to make app.js more streamline by making modules out of all the various inquire prompts and reused components (like some of the switches for example) and saving them in library and exporting them. I made this realization about halfway through the project and did not have time to rework the code, but will intend on building future apps as described above. Thanks again for your consideration.

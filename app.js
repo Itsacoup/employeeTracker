@@ -28,6 +28,7 @@ function welcome(){
 };
 welcome();
 
+//Navigation menu that calls all pieces of functionality by feeding prompt selection to switch statement
 function employeeMenu() {
   inquirer.prompt([
       {
@@ -77,7 +78,7 @@ function employeeMenu() {
   });
 };
 
-// view all employess
+// view all employess, sql SELECT statement sent to database that returns a table made up of coloums from all tables in DB
 function allEmloyees() {
   connection.query("SELECT employee.first_name AS 'first name', employee.last_name AS 'last name', role.title, role.salary, department.name AS 'department', CONCAT(e.first_name, ' ' ,e.last_name) AS manager FROM employee INNER JOIN role on role.id = employee.role_id INNER JOIN department on department.id = role.department_id left join employee e on employee.manager_id = e.id;", function(err, res) {
     if (err) throw err;
@@ -87,7 +88,7 @@ function allEmloyees() {
   });
   employeeMenu();
 }
-// view all employees by department
+// view all employees by department, sql SELECT statement to return only employees by a selected department, making use of the foreign keys set in role_id and department_id
 function employeeByDept() {
   inquirer.prompt([
     {
@@ -130,7 +131,7 @@ function employeeByDept() {
   });
 };
 
-// view all employees by manager
+// view all employees by manager. sql SELECT statement similar to above but uses manager_id, which uses a switch to take in the "name" and covert it to the approiate id
 function employeeByManager() {
   inquirer.prompt([
     {
@@ -174,7 +175,9 @@ function employeeByManager() {
   });
 };
 
-// add employee
+// add employee, sql INSERT statement allows you to make new employee. Builds response object through series of prompts, passes that into the newEmployee.js class
+// constructor which returns an new object that role and manager id are added too, via switch statements. This is then utilized through template literals in the 
+// insert statement.
 function addEmployee() {
   inquirer.prompt([
     {
@@ -286,7 +289,11 @@ function addEmployee() {
   });
 };
 
-// remove employee
+// remove employee. first a SELECT is used to render a list of all employees. It creates a data array of objects with id and names for reference, and creates and empty array. 
+// A loop is then used to combine first/last names to one var and the fill the array with until length of object is met. This array allows for a dynamic list in the
+// prompt for who you would like to remove. Once selected the name var is split into an array with first and last name indexes. These 2 indexs are compared against the 2 
+// appropriate values in the data array returned earlier via another loop. When the match is found, the ID value of the current object is retrieved and set as a variable.
+// that variable is then passed in to the Delete statement as a template literal.
 function removeEmployee() {
   connection.query("SELECT id, first_name, last_name from employee;", function(err, res) {
     if (err) throw err;
@@ -328,7 +335,9 @@ function removeEmployee() {
   });
 };
 
-// update employee role
+// update employee role. sql UPDATE statement. The first part is nearly identical to the previous block in how it obtains an ID based on a name selection.
+// Once the id is available the query is made based on the prompt reponses. In the case and role (by name) is selected in prompt and it goes through a switch to
+// convert it to that roles approiate id key in the DB. and then updates the role of the chosen employee using the selected ID
 function updateEmployeeRole() {
   connection.query("SELECT id, first_name, last_name from employee;", function(err, res) {
     if (err) throw err;
@@ -414,7 +423,7 @@ function updateEmployeeRole() {
 };
 
 
-// update employee manager
+// update employee manager. sql UPDATE statement. Near indentical to last statement, save that it updates the manager id instead of role
 function updateEmployeeManager() {
   connection.query("SELECT id, first_name, last_name from employee;", function(err, res) {
     if (err) throw err;
